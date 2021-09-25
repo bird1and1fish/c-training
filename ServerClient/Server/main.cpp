@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "winsock2.h"
-#pragma comment(lib, "ws2_32.lib")// Á´½Ó¿âÎÄ¼ş
+#pragma comment(lib, "ws2_32.lib")// é“¾æ¥åº“æ–‡ä»¶
 
 using namespace std;
 
@@ -16,14 +16,14 @@ DWORD WINAPI threadpro(LPVOID pParam)
 
 	while (1)
 	{
-		int num = recv(hsock, buffer, 1024, 0);// ×èÈûº¯Êı£¬µÈ´ı½ÓÊÕÄÚÈİ
+		int num = recv(hsock, buffer, 1024, 0);// é˜»å¡å‡½æ•°ï¼Œç­‰å¾…æ¥æ”¶å†…å®¹
 		if (num >= 0)
 			cout << "Receive from clinet" << buffer << endl;
 		if (!strcmp(buffer, "A"))
 		{
 			memset(sendBuffer, 0, 1024);
 			strcpy(sendBuffer, "B");
-			int ires = send(hsock, sendBuffer, sizeof(sendBuffer), 0);// »ØËÍĞÅÏ¢
+			int ires = send(hsock, sendBuffer, sizeof(sendBuffer), 0);// å›é€ä¿¡æ¯
 			cout << "Send to client" << sendBuffer << endl;
 		}
 
@@ -31,7 +31,7 @@ DWORD WINAPI threadpro(LPVOID pParam)
 		{
 			memset(sendBuffer, 0, 1024);
 			strcpy(sendBuffer, "D");
-			int ires = send(hsock, sendBuffer, sizeof(sendBuffer), 0);// »ØËÍĞÅÏ¢
+			int ires = send(hsock, sendBuffer, sizeof(sendBuffer), 0);// å›é€ä¿¡æ¯
 			cout << "Send to client" << sendBuffer << endl;
 		}
 
@@ -46,7 +46,7 @@ DWORD WINAPI threadpro(LPVOID pParam)
 		{
 			memset(sendBuffer, 0, 1024);
 			strcpy(sendBuffer, "ERR");
-			int ires = send(hsock, sendBuffer, sizeof(sendBuffer), 0);// »ØËÍĞÅÏ¢
+			int ires = send(hsock, sendBuffer, sizeof(sendBuffer), 0);// å›é€ä¿¡æ¯
 			cout << "Send to client" << sendBuffer << endl;
 		}
 	}
@@ -55,37 +55,37 @@ DWORD WINAPI threadpro(LPVOID pParam)
 
 int main(int argc, char* argv[])
 {
-	WSADATA wsd;// ¸Ã½á¹¹¼ÇÂ¼ÁËÌ×½Ó×ÖĞÅÏ¢
-	WSAStartup(MAKEWORD(2, 2), &wsd);// ³õÊ¼»¯Winsock
+	WSADATA wsd;// è¯¥ç»“æ„è®°å½•äº†å¥—æ¥å­—ä¿¡æ¯
+	WSAStartup(MAKEWORD(2, 2), &wsd);// åˆå§‹åŒ–Winsock
 	SOCKET m_SockServer;
 	sockaddr_in serveraddr;
 	sockaddr_in serveraddrfrom;
 	SOCKET m_Server[20];
 
-	serveraddr.sin_family = AF_INET;// ÉèÖÃ·şÎñÆ÷µØÖ·¼Ò×å
-	serveraddr.sin_port = htons(4600);// ÉèÖÃ·şÎñÆ÷¶Ë¿ÚºÅ
+	serveraddr.sin_family = AF_INET;// è®¾ç½®æœåŠ¡å™¨åœ°å€å®¶æ—
+	serveraddr.sin_port = htons(4600);// è®¾ç½®æœåŠ¡å™¨ç«¯å£å·
 	serveraddr.sin_addr.S_un.S_addr = inet_addr("127.0.0.1");
 
 	m_SockServer = socket(AF_INET, SOCK_STREAM, 0);
 
-	int i = bind(m_SockServer, (sockaddr*)&serveraddr, sizeof(serveraddr));// ½«Ì×½Ó×Ö°ó¶¨µ½Ö¸¶¨µÄ¶Ë¿ÚºÍµØÖ·ÉÏ
+	int i = bind(m_SockServer, (sockaddr*)&serveraddr, sizeof(serveraddr));// å°†å¥—æ¥å­—ç»‘å®šåˆ°æŒ‡å®šçš„ç«¯å£å’Œåœ°å€ä¸Š
 	cout << "bind:" << i << endl;
 
-	int iMaxConnect = 20;// ×î´óÁ¬½ÓÊı
+	int iMaxConnect = 20;// æœ€å¤§è¿æ¥æ•°
 	int iConnect = 0;
 	int iLisRet;
-	char buf[] = "THIS IS SERVER\0";// Ïò¿Í»§¶Ë·¢ËÍµÄÄÚÈİ
+	char buf[] = "THIS IS SERVER\0";// å‘å®¢æˆ·ç«¯å‘é€çš„å†…å®¹
 	char WarnBuf[] = "It is voer Max connect\0";
 	int len = sizeof(sockaddr);
 
 	while (1)
 	{
-		iLisRet = listen(m_SockServer, 0);// ½øĞĞ¼àÌı
-		m_Server[iConnect] = accept(m_SockServer, (sockaddr*)&serveraddrfrom, &len);// Í¬Òâ½¨Á¢Á¬½Ó
+		iLisRet = listen(m_SockServer, 0);// è¿›è¡Œç›‘å¬
+		m_Server[iConnect] = accept(m_SockServer, (sockaddr*)&serveraddrfrom, &len);// åŒæ„å»ºç«‹è¿æ¥
 		if (m_Server[iConnect] != INVALID_SOCKET)
 		{
 			int ires = send(m_Server[iConnect], buf, sizeof(buf), 0);
-			cout << " accept" << ires << endl;// ÏÔÊ¾ÒÑ¾­½¨Á¢Á¬½Ó´ÎÊı
+			cout << " accept" << ires << endl;// æ˜¾ç¤ºå·²ç»å»ºç«‹è¿æ¥æ¬¡æ•°
 			++iConnect;
 			if (iConnect > iMaxConnect)
 			{
@@ -93,9 +93,9 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				HANDLE m_Handle;// Ïß³Ì¾ä±ú
-				DWORD nThreadId = 0;// Ïß³ÌID
-				m_Handle = (HANDLE)::CreateThread(NULL, 0, threadpro, (LPVOID)m_Server[--iConnect], 0, &nThreadId);// Æô¶¯Ïß³Ì
+				HANDLE m_Handle;// çº¿ç¨‹å¥æŸ„
+				DWORD nThreadId = 0;// çº¿ç¨‹ID
+				m_Handle = (HANDLE)::CreateThread(NULL, 0, threadpro, (LPVOID)m_Server[--iConnect], 0, &nThreadId);// å¯åŠ¨çº¿ç¨‹
 			}
 		}
 		WSACleanup;

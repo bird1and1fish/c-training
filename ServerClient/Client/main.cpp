@@ -34,11 +34,11 @@ void main()
 			cin >> inBuf;
 			if (!strcmp(inBuf, "exit"))
 			{
-				send(m_SockClient, inBuf, sizeof(inBuf), 0);// ·¢³öÍË³öÖ¸Áî
+				send(m_SockClient, inBuf, sizeof(inBuf), 0);// å‘å‡ºé€€å‡ºæŒ‡ä»¤
 				return;
 			}
 			send(m_SockClient, inBuf, sizeof(inBuf), 0);
-			num = recv(m_SockClient, buffer, 1024, 0);// ½ÓÊÕ¿Í»§¶Ë·¢ËÍ¹ıÀ´µÄÊı¾İ
+			num = recv(m_SockClient, buffer, 1024, 0);// æ¥æ”¶å®¢æˆ·ç«¯å‘é€è¿‡æ¥çš„æ•°æ®
 			if (num >= 0)
 				cout << "Receive from server" << buffer << endl;
 		}
